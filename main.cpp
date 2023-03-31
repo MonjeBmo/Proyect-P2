@@ -16,7 +16,7 @@ typedef NodoPila *ptrNodoPila;
 
 // prototypes functions pila
 void push(ptrNodoPila *ptr, int value);
-char pop(ptrNodoPila *ptr);
+void pop(ptrNodoPila *ptr, int cant);
 int isEmptyPila(ptrNodoPila ptr);
 void printPila(ptrNodoPila ptr);
 void printInversePila(ptrNodoPila ptr);
@@ -55,17 +55,52 @@ int main()
                 cin >> c;
             }
             generateData(c, &ptrPila);
-            break;
 
             break;
         }
+        case 2:
+        {
+            int cant;
+            int deleteCant;
+            while (ptrPila != NULL)
+            {
+                cant++;
+                ptrPila = ptrPila->ptrS;
+            }
+            cout << endl
+                 << "la cantidad de Elementos es: " << cant << endl;
+            cout << "cantidad a eliminar: ";
+            cin >> deleteCant;
+            while (deleteCant > cant)
+            {
+                cout << endl
+                     << "La cantidad debe ser menor a " << cant << endl;
+                cout << "cantidad a eliminar: ";
+                cin >> deleteCant;
+            }
 
+            pop(&ptrPila, cant);
+
+            break;
+        }
         case 3:
         {
             cout << "Mostrar Pila" << endl
                  << endl;
             cout << "<----------------Pila---------------->" << endl;
             printPila(ptrPila);
+            break;
+        }
+        case 4:
+        {
+            printInversePila(ptrPila);
+            break;
+        }
+        case 5:
+        {
+            cout << endl
+                 << "<---Modificando el ultimo valor--->" << endl;
+            modifyLastValue(ptrPila);
             break;
         }
         case 6:
@@ -141,15 +176,18 @@ void push(ptrNodoPila *ptr, int value)
     }
 }
 
-char pop(ptrNodoPila *ptr)
+void pop(ptrNodoPila *ptr, int cant)
 {
     ptrNodoPila ptrTemp;
-    char valueDelete;
-    ptrTemp = *ptr;
-    valueDelete = (*ptr)->d;
-    *ptr = (*ptr)->ptrS;
-    free(ptrTemp);
-    return valueDelete;
+    int valueDelete;
+
+    for (int i = 0; i < cant; i++)
+    {
+        ptrTemp = *ptr;
+        valueDelete = (*ptr)->d;
+        *ptr = (*ptr)->ptrS;
+        free(ptrTemp);
+    }
 }
 
 int isEmptyPila(ptrNodoPila ptr)
@@ -190,6 +228,65 @@ void deletePila(ptrNodoPila *ptr)
     *ptr = NULL;
 }
 
-void printInversePila(ptrNodoPila ptr) {}
+void printInversePila(ptrNodoPila ptr)
+{
+    if (isEmptyPila(ptr))
+    {
+        printf("La pila esta vacia\n");
+    }
+    else
+    {
+        printf("La pila es: \n");
 
-void modifyLastValue(ptrNodoPila ptr) {}
+        ptrNodoPila pilaAuxiliar = NULL;
+
+        while (ptr != NULL)
+        {
+            ptrNodoPila nuevoNodo = new NodoPila;
+            nuevoNodo->d = ptr->d;
+
+            nuevoNodo->ptrS = pilaAuxiliar;
+            pilaAuxiliar = nuevoNodo;
+
+            ptr = ptr->ptrS;
+        }
+
+        while (pilaAuxiliar != NULL)
+        {
+            cout << "| " << pilaAuxiliar->d << " |\n";
+            pilaAuxiliar = pilaAuxiliar->ptrS;
+        }
+
+        printf("NULL\n\n");
+    }
+}
+
+void modifyLastValue(ptrNodoPila ptr)
+{
+    if (isEmptyPila(ptr))
+    {
+        printf("La pila esta vacia\n");
+    }
+    else
+    {
+        int valueCima = ptr->d;
+        cout << "El elemento de la cima es: " << valueCima;
+
+        char respuesta;
+        cout << "Desea modificar el elemento de la cima? (s/n): ";
+        cin >> respuesta;
+
+        if (respuesta == 's' || respuesta == 'S')
+        {
+            int nuevoValor;
+            cout << "Ingrese el nuevo valor: ";
+            cin >> nuevoValor;
+            ptr->d = nuevoValor;
+            cout << "El nuevo elemento de la cima es: " << nuevoValor;
+        }
+        else
+        {
+            cout << "No se ha modificado el elemento de la cima." << endl;
+        }
+    }
+}
