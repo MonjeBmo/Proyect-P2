@@ -132,7 +132,7 @@ void generateData(int cant, ptrNodoPila *ptrP)
     int data[cant];
     // generate data
     srand(time(NULL));
-    for (int i = 0; i <= cant; i++)
+    for (int i = 0; i < cant; i++)
     {
         data[i] = 1 + rand() % (50 - 1 + 1);
     }
@@ -167,7 +167,11 @@ void push(ptrNodoPila *ptr, int value)
     if (ptrNuevo != NULL)
     {
         ptrNuevo->d = value;
-        ptrNuevo->ptrS = *ptr;
+        ptrNuevo->ptrS = NULL;
+        if (*ptr != NULL)
+        {
+            ptrNuevo->ptrS = *ptr;
+        }
         *ptr = ptrNuevo;
     }
     else
