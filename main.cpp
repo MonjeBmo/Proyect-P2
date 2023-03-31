@@ -28,7 +28,14 @@ void generateData(int cant, ptrNodoPila *ptrP);
 void instructions();
 
 int main()
-{    while (op != 5)
+{
+    ptrNodoPila ptrPila = NULL;
+    int op;
+    int value;
+    instructions();
+    printf("\n Que desea realizar?");
+    scanf("%d", &op);
+    while (op != 5)
     {
         system("clear");
         switch (op)
@@ -36,88 +43,23 @@ int main()
         case 1:
         {
             int c = 0;
-            char lp;
 
             cout << endl;
-            SubInstructions();
-            cout << endl
-                 << "Ahora que desea Realizar : ";
-            cin >> lp;
-            switch (lp)
+            cout << "Ingrese la cantidad de caracteres: ";
+            cin >> c;
+            while (c >= 50)
             {
-            case 'a':
-            {
+                cout << endl
+                     << "Error - No mayor a 50" << endl;
                 cout << "Ingrese la cantidad de caracteres: ";
                 cin >> c;
-                while (c >= 21)
-                {
-                    cout << endl
-                         << "Error - No mayor a 20" << endl;
-                    cout << "Ingrese la cantidad de caracteres: ";
-                    cin >> c;
-                }
-                generateData(c, &ptrPila, &ptrList, true);
-                break;
             }
-            case 'b':
-                printLista(ptrList);
-                cin.get();
-                break;
-            case 'c':
-                cout << "Regresando ...";
-                return 0;
-                break;
-
-            default:
-                cout << endl
-                     << "Opcion no valida!";
-                break;
-            }
+            generateData(c, &ptrPila);
+            break;
 
             break;
         }
-        case 2:
-        {
-            int c = 0;
-            char lp;
 
-            cout << endl;
-            SubInstructions();
-            cout << endl
-                 << "Ahora que desea Realizar : ";
-            cin >> lp;
-            switch (lp)
-            {
-            case 'a':
-            {
-                cout << "Ingrese la cantidad de caracteres: ";
-                cin >> c;
-                while (c >= 50)
-                {
-                    cout << endl
-                         << "Error - No mayor a 20" << endl;
-                    cout << "Ingrese la cantidad de caracteres: ";
-                    cin >> c;
-                }
-                generateData(c, &ptrPila);
-                break;
-            }
-            case 'b':
-                printPila(ptrPila);
-                break;
-            case 'c':
-                cout << "Regresando ...";
-                return 0;
-                break;
-
-            default:
-                cout << endl
-                     << "Opcion no valida!";
-                break;
-            }
-
-            break;
-        }
         case 3:
         {
             cout << "Mostrar Pila" << endl
