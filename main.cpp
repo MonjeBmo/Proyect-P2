@@ -60,26 +60,34 @@ int main()
         }
         case 2:
         {
-            int cant;
-            int deleteCant;
-            while (ptrPila != NULL)
+            int cant = 0;
+            int deleteCant = 0;
+            ptrNodoPila ptrAux = ptrPila; // variable auxiliar para no modificar el puntero original
+
+            while (ptrAux != NULL)
             {
                 cant++;
-                ptrPila = ptrPila->ptrS;
-            }
-            cout << endl
-                 << "la cantidad de Elementos es: " << cant << endl;
-            cout << "cantidad a eliminar: ";
-            cin >> deleteCant;
-            while (deleteCant > cant)
-            {
-                cout << endl
-                     << "La cantidad debe ser menor a " << cant << endl;
-                cout << "cantidad a eliminar: ";
-                cin >> deleteCant;
+                ptrAux = ptrAux->ptrS;
             }
 
-            pop(&ptrPila, cant);
+            cout << endl
+                 << "La cantidad de elementos es: " << cant << endl;
+
+            do
+            {
+                cout << "Ingrese la cantidad de elementos a eliminar (debe ser menor o igual a " << cant << "): ";
+                cin >> deleteCant;
+            } while (deleteCant < 1 || deleteCant > cant);
+
+            if (ptrPila == NULL)
+            {
+                cout << "La pila está vacía." << endl;
+            }
+            else
+            {
+                pop(&ptrPila, deleteCant);
+                cout << "Se eliminaron " << deleteCant << " elementos de la pila." << endl;
+            }
 
             break;
         }
@@ -138,7 +146,7 @@ void generateData(int cant, ptrNodoPila *ptrP)
     }
     cout << endl
          << "Llenando Pila! ..." << endl;
-    for (int i = 0; i <= cant; i++)
+    for (int i = 0; i < cant; i++)
     {
         push(ptrP, data[i]);
     }
@@ -182,14 +190,11 @@ void push(ptrNodoPila *ptr, int value)
 
 void pop(ptrNodoPila *ptr, int cant)
 {
-    ptrNodoPila ptrTemp;
-    int valueDelete;
-
-    for (int i = 0; i < cant; i++)
+    for (int i = 0; i < cant && *ptr != NULL; i++)
     {
-        ptrTemp = *ptr;
-        valueDelete = (*ptr)->d;
+        ptrNodoPila ptrTemp = *ptr;
         *ptr = (*ptr)->ptrS;
+        int valueDelete = ptrTemp->d;
         free(ptrTemp);
     }
 }
