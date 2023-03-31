@@ -28,7 +28,126 @@ void generateData(int cant, ptrNodoPila *ptrP);
 void instructions();
 
 int main()
-{
+{    while (op != 5)
+    {
+        system("clear");
+        switch (op)
+        {
+        case 1:
+        {
+            int c = 0;
+            char lp;
+
+            cout << endl;
+            SubInstructions();
+            cout << endl
+                 << "Ahora que desea Realizar : ";
+            cin >> lp;
+            switch (lp)
+            {
+            case 'a':
+            {
+                cout << "Ingrese la cantidad de caracteres: ";
+                cin >> c;
+                while (c >= 21)
+                {
+                    cout << endl
+                         << "Error - No mayor a 20" << endl;
+                    cout << "Ingrese la cantidad de caracteres: ";
+                    cin >> c;
+                }
+                generateData(c, &ptrPila, &ptrList, true);
+                break;
+            }
+            case 'b':
+                printLista(ptrList);
+                cin.get();
+                break;
+            case 'c':
+                cout << "Regresando ...";
+                return 0;
+                break;
+
+            default:
+                cout << endl
+                     << "Opcion no valida!";
+                break;
+            }
+
+            break;
+        }
+        case 2:
+        {
+            int c = 0;
+            char lp;
+
+            cout << endl;
+            SubInstructions();
+            cout << endl
+                 << "Ahora que desea Realizar : ";
+            cin >> lp;
+            switch (lp)
+            {
+            case 'a':
+            {
+                cout << "Ingrese la cantidad de caracteres: ";
+                cin >> c;
+                while (c >= 50)
+                {
+                    cout << endl
+                         << "Error - No mayor a 20" << endl;
+                    cout << "Ingrese la cantidad de caracteres: ";
+                    cin >> c;
+                }
+                generateData(c, &ptrPila);
+                break;
+            }
+            case 'b':
+                printPila(ptrPila);
+                break;
+            case 'c':
+                cout << "Regresando ...";
+                return 0;
+                break;
+
+            default:
+                cout << endl
+                     << "Opcion no valida!";
+                break;
+            }
+
+            break;
+        }
+        case 3:
+        {
+            cout << "Mostrar Pila" << endl
+                 << endl;
+            cout << "<----------------Pila---------------->" << endl;
+            printPila(ptrPila);
+            break;
+        }
+        case 6:
+        {
+            deletePila(&ptrPila);
+            cout << "Pila destruida." << endl;
+            break;
+        }
+        case 7:
+        {
+            cout << "ADIOS!!!" << endl;
+            break;
+        }
+
+        default:
+        {
+            cout << "Error - opcion no valida!";
+            break;
+        }
+        }
+        instructions();
+        cout << "Que desea realizar? ";
+        cin >> op;
+    }
 }
 
 void generateData(int cant, ptrNodoPila *ptrP)
