@@ -20,7 +20,7 @@ void pop(ptrNodoPila *ptr, int cant);
 int isEmptyPila(ptrNodoPila ptr);
 void printPila(ptrNodoPila ptr);
 void printInversePila(ptrNodoPila ptr);
-void modifyLastValue(ptrNodoPila ptr);
+void modifyLastValue(ptrNodoPila *ptr);
 void deletePila(ptrNodoPila *ptr);
 
 // All app
@@ -35,7 +35,7 @@ int main()
     instructions();
     printf("\n Que desea realizar?");
     scanf("%d", &op);
-    while (op != 5)
+    while (op != 7)
     {
         system("clear");
         switch (op)
@@ -108,7 +108,7 @@ int main()
         {
             cout << endl
                  << "<---Modificando el ultimo valor--->" << endl;
-            modifyLastValue(ptrPila);
+            modifyLastValue(&ptrPila);
             break;
         }
         case 6:
@@ -270,15 +270,15 @@ void printInversePila(ptrNodoPila ptr)
     }
 }
 
-void modifyLastValue(ptrNodoPila ptr)
+void modifyLastValue(ptrNodoPila *ptr)
 {
-    if (isEmptyPila(ptr))
+    if (isEmptyPila(*ptr))
     {
         printf("La pila esta vacia\n");
     }
     else
     {
-        int valueCima = ptr->d;
+        int valueCima = (*ptr)->d;
         cout << "El elemento de la cima es: " << valueCima;
 
         char respuesta;
@@ -290,7 +290,7 @@ void modifyLastValue(ptrNodoPila ptr)
             int nuevoValor;
             cout << "Ingrese el nuevo valor: ";
             cin >> nuevoValor;
-            ptr->d = nuevoValor;
+            (*ptr)->d = nuevoValor;
             cout << "El nuevo elemento de la cima es: " << nuevoValor;
         }
         else
